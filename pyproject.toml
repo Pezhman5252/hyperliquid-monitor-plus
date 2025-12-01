@@ -1,0 +1,185 @@
+[build-system]
+requires = ["hatchling>=1.18.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hyperliquid-monitor-plus"
+version = "3.0.0"
+description = "Advanced Production-Ready Whale Tracking & Intelligence System for Hyperliquid DEX"
+authors = [
+    {name = "Pezhman Hajipour", email = "Prtsianboy.1991g@gmail.com"},
+]
+readme = "README.md"
+requires-python = ">=3.9,<3.14"
+license = {text = "MIT"}
+keywords = ["hyperliquid", "whale", "tracking", "crypto", "trading", "monitoring", "dex", "ai", "ml", "intelligence", "dashboard"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+
+# ✅ FIXED: فقط وابستگی‌های ضروری - کتابخانه سبک‌تر (50MB به جای 500MB)
+dependencies = [
+    "hyperliquid-python-sdk>=0.21.0",
+    "requests>=2.28.0",
+    "numpy>=1.20.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+# ✅ FIXED: وابستگی‌های سنگین به optional منتقل شدند
+analysis = [
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "pandas>=1.3.0",
+]
+viz = [
+    "matplotlib>=3.5.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "dash>=2.0.0",
+]
+# ✅ FIXED: نسخه‌های یکسان در همه فایل‌ها
+ml = [
+    "tensorflow>=2.10.0",
+    "torch>=1.12.0",
+    "lightgbm>=3.3.0",
+    "xgboost>=1.6.0",
+]
+web = [
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "flask>=2.3.0",
+    "dash>=2.0.0",
+    "plotly>=5.0.0",
+]
+# ✅ FIXED: نسخه‌های یکسان در همه فایل‌ها
+notifications = [
+    "discord.py>=2.3.0",
+    "python-telegram-bot>=20.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "pre-commit>=3.0.0",
+    "safety>=2.3.0",
+]
+all = [
+    # Analysis
+    "scipy>=1.7.0",
+    "scikit-learn>=1.0.0",
+    "pandas>=1.3.0",
+    # Visualization
+    "matplotlib>=3.5.0",
+    "seaborn>=0.11.0", 
+    "plotly>=5.0.0",
+    "dash>=2.0.0",
+    # ML
+    "tensorflow>=2.10.0",
+    "torch>=1.12.0",
+    "lightgbm>=3.3.0",
+    "xgboost>=1.6.0",
+    # Web
+    "fastapi>=0.104.0",
+    "uvicorn>=0.24.0",
+    "flask>=2.3.0",
+    # Notifications
+    "discord.py>=2.3.0",
+    "python-telegram-bot>=20.0.0",
+    # Dev
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "pre-commit>=3.0.0",
+    "safety>=2.3.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Pezhman5252/hyperliquid_monitor_plus"
+"Bug Reports" = "https://github.com/Pezhman5252/hyperliquid_monitor_plus/issues"
+"Source" = "https://github.com/Pezhman5252/hyperliquid_monitor_plus"
+"Documentation" = "https://github.com/Pezhman5252/hyperliquid_monitor_plus/wiki"
+
+[project.scripts]
+hyperliquid-monitor = "hyperliquid_monitor_plus.monitor:main"
+hyperliquid-whale-bot = "hyperliquid_monitor_plus.core.core:main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["hyperliquid_monitor_plus"]
+
+[tool.hatch.build.targets.sdist]
+packages = ["hyperliquid_monitor_plus"]
+
+# Removed vale hook for compatibility
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--cov=hyperliquid_monitor_plus --cov-report=html --cov-report=term"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["hyperliquid_monitor_plus"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/examples/*",
+    "*/setup.py",
+    "*/conftest.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
